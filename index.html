@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Westcliff Fullstack Bootcamp jQuery Ajax Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Create a placeholder div inside the body (hidden initially)
+            $("body").append('<div id="showinfo" style="display: none;"></div>');
+
+            $("#btn").click(function(event) {
+                // Clear previous content
+                $('#showinfo').empty();
+
+                // Append paragraph elements
+                $('#showinfo').append('<p></p>');
+                $('#showinfo').append('<p></p>');
+                $('#showinfo').append('<p></p>');
+
+                // Load JSON data and populate the paragraphs
+                $.getJSON('result.json', function(jqdata) {
+                    $('#showinfo p:first-child').text('NAME: ' + jqdata.name);
+                    $('#showinfo p:nth-child(2)').text('AGE: ' + jqdata.age);
+                    $('#showinfo p:last-child').text('SEX: ' + jqdata.sex);
+
+                    // Show the div after data is loaded
+                    $('#showinfo').show();
+                }).fail(function() {
+                    alert("Error loading JSON file. Make sure the file path is correct.");
+                });
+            });
+        });
+    </script>
+    <style>
+        #showinfo {
+            background-color: #eee;
+            padding: 10px;
+            margin-top: 10px;
+            width: fit-content;
+        }
+    </style>
+</head>
+<body>
+    <p>Click button to load result.json file</p>
+    <input type="button" id="btn" value="Load Data">
+</body>
+</html>
